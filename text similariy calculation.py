@@ -36,10 +36,11 @@ data21 = ""
 for item in data2:
     data21 += item + " "
 documents = [data11, data21]
-texts = [[word for word in document.split()] for document in documents] # note that texts has tow dimensions.
+texts = [[word for word in document.split()] for document in documents] # note that texts has 2 dimensions.
 
 #4 attain the frequency of word
-frequency = defaultdict(int)
+# defaultdict can return value without key: https://docs.python.org/2/library/collections.html#collections.defaultdict
+frequency = defaultdict(int) 
 for text in texts:
     for token in text:
         frequency[token] += 1
