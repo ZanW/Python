@@ -39,9 +39,28 @@ documents = [data11, data21]
 texts = [[word for word in document.split()] for document in documents] # note that texts has 2 dimensions.
 
 #4 attain the frequency of word
-# defaultdict can return value without key: https://docs.python.org/2/library/collections.html#collections.defaultdict
+# defaultdict: dict subclass that calls a factory function to supply missing values, can return value without key: https://docs.python.org/2/library/collections.html#collections.defaultdict
 frequency = defaultdict(int) 
 for text in texts:
     for token in text:
         frequency[token] += 1
-        
+
+#filter word with frequency smaller than 3
+filtered = [[word for word in text if frequency[token] > 3] for text in texts]
+
+# build a new dictionary and save
+dictionary = corpora.Dictionary(texts)
+dictionary.save("C:/Users/Administrator/Desktop/text similarity test/newDic.txt")
+
+d3 = open("C:/Users/Administrator/Desktop/text similarity test/d3.txt").read()
+data3 = jieba.cut(d3)
+data31 = ""
+for item in data3:
+    data31 = item+" "
+data31 = [data31]
+data33 = data32.split()
+frequency = defaultdict(int)
+for token in data33:
+    frequency[token] += 1
+# corpora.dictionary.doc2bow: Convert document (a list of words) into the bag-of-words format = list of (token_id, token_count) 2-tuples. Each word is assumed to be a tokenized and normalized string (either unicode or utf8-encoded). No further preprocessing is done on the words in document; apply tokenization, stemming etc. before calling this method.
+
