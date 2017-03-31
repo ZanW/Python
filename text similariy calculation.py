@@ -10,7 +10,7 @@
 #8 change intended compared text file into sparse vector via doc2boe
 #9 further handle the sparse vector to have a new corpora
 #10 handle new corpora with tfidf model to gain tfidf
-#11 get characteristic number via token2id
+#11 get feature number via token2id
 #12 calculate similarity of sparse matrix, in order to build index
 #13 obtain the final similairy results
 
@@ -45,22 +45,36 @@ for text in texts:
     for token in text:
         frequency[token] += 1
 
-#filter word with frequency smaller than 3
+#5 filter the words with low frequency, filter word with frequency smaller than 3
 filtered = [[word for word in text if frequency[token] > 3] for text in texts]
 
-# build a new dictionary and save
+#6 build dictionary with corpora and save
 dictionary = corpora.Dictionary(texts)
 dictionary.save("C:/Users/Administrator/Desktop/text similarity test/newDic.txt")
 
+#7 load text file intended to compare
 d3 = open("C:/Users/Administrator/Desktop/text similarity test/d3.txt").read()
 data3 = jieba.cut(d3)
 data31 = ""
 for item in data3:
-    data31 = item+" "
-data31 = [data31]
-data33 = data32.split()
-frequency = defaultdict(int)
-for token in data33:
-    frequency[token] += 1
+    data31 += item+" "
+#data31 = [data31]
+
+#8 change intended compared text file into sparse vector via doc2boe
+new_doc = data31
+new_vec = dictionary.doc2bow(new_doc.split()) # bulid sparce vector
 # corpora.dictionary.doc2bow: Convert document (a list of words) into the bag-of-words format = list of (token_id, token_count) 2-tuples. Each word is assumed to be a tokenized and normalized string (either unicode or utf8-encoded). No further preprocessing is done on the words in document; apply tokenization, stemming etc. before calling this method.
 
+#9 further handle the sparse vector to have a new corpora
+corpus = [dictionary.doc2bow(text) for text in texts]
+corpora.MmCorpus.serialize("C:/Users/Administrator/Desktop/text similarity test/d3.mm",corpus)
+#10 handle new corpora with tfidf model to gain tfidf
+tfidf = models.TfidfModel(corpus)
+
+#11 get feature number via token2id, actually it is just the number of keys
+featureNum = len(dictionary.token2id.keys()) 
+
+#12 calculate similarity of sparse matrix, in order to build index
+index = similarities.SparseMatrixSimilarity(tfidf[corpus], num_features = featureNum)
+sim = index[tfidf[new_vec]]
+print(sim)
