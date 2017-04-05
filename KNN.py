@@ -3,8 +3,8 @@ from numpy import *
 # import numpy: methods under package needs package name introduced ahead of it
 import operator
 
-#extend array row: tile(name, number(times original column numbers))
-#extend column row: tile(name, (newRowNum, number(times original column numbers)))
+#extend array column: tile(name, number(times original column numbers))
+#extend array row: tile(name, (newRowNum, newColNumber(times original column numbers))) (note that newRowNum >1, increases array's dimension)
 
 def knn(k, testdata, traindata, labels):
     traindatasize = traindata.shape[0] #index [0] represents row number, [1] indicates column number
@@ -16,7 +16,8 @@ def knn(k, testdata, traindata, labels):
     count = {}
     for i in range(0, k):
         vote = labels[sortdistance[i]]
-        count[vote] = count.get(vote, 0) + 1 # count.get(index) = count[index], but count.get(index, value), preassign value to index, but final assignment, needs count[index] = to set
+        count[vote] = count.get(vote, 0) + 1 # count.get(index) = count[index], however, count.get(index, value), preassign value to index, but final assignment, needs count[index] = to set
         # sort count[vote] by frequency values in increasing order
-    sortcount= sorted(count.items(), key = operator.itemgetter(1), reverse = True) # operator.itemgetter(1): sort the dictionary item based on value; # operator.itemgetter(0): sort the dictionary item based on key; reverse = True: in descending order
+    sortcount= sorted(count.items(), key = operator.itemgetter(1), reverse = True) # operator.itemgetter(1): sort the dictionary item based on value;
+                                                                                                                              # operator.itemgetter(0): sort the dictionary item based on key; reverse = True: in descending order
     return sortcount[0][0]
