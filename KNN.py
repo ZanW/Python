@@ -19,5 +19,5 @@ def knn(k, testdata, traindata, labels):
         count[vote] = count.get(vote, 0) + 1 # count.get(index) = count[index], however, count.get(index, value), preassign value to index, but final assignment, needs count[index] = to set
         # sort count[vote] by frequency values in increasing order
     sortcount= sorted(count.items(), key = operator.itemgetter(1), reverse = True) # operator.itemgetter(1): sort the dictionary item based on value;
-                                                                                                                              # operator.itemgetter(0): sort the dictionary item based on key; reverse = True: in descending order
+                                                                                                                       # operator.itemgetter(0): sort the dictionary item based on key; reverse = True: in descending order
     return sortcount[0][0]
