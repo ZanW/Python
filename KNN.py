@@ -26,6 +26,7 @@ def knn(k, testdata, traindata, labels):
 
 # pillow : deal with image, abbreviate as PIL when use
 # first convert all image into size 32*32, then make txt file
+'''
 from PIL import Image
 im = Image.open("C:/Users/Administrator/Desktop/testimage.jpg")
 fh = open("C:/Users/Administrator/Desktop/testimage.txt","a")
@@ -44,7 +45,7 @@ for i in range(height):
             fh.write("0")
     fh.write("\n")
 fh.close()
-
+'''
 #load data
 def datatoarray(fname):
     arr = []
@@ -54,7 +55,7 @@ def datatoarray(fname):
         for j in range(0, 32):
             arr.append(int(thisline[j]))
     return arr
-arr1 = datatoarray("C:/Users/Administrator/Desktop/0_30.txt")
+#arr1 = datatoarray("C:/Users/Administrator/Desktop/0_30.txt")
 #build a method to get the prefix of the file name of training data
 def seplabel(fname):
     filestr = fname.split(".")[0]
@@ -65,7 +66,7 @@ def seplabel(fname):
 from os import listdir
 def traindata():
     labels = []
-    trainfile = listdir("C:/Users/Administrator/Desktop/data1/traindata")
+    trainfile = listdir("C:/Users/Administrator/Desktop/data/traindata")
     num = len(trainfile)
     #one list store all train data, each row store one file of train data, so the list should have 1024(32*32 values in one file of training data) columns
     #use zeros() creates a list with 0 values(belongs to numpy package)
@@ -74,19 +75,26 @@ def traindata():
         thisFileName = trainfile[i]
         thislabel = seplabel(thisFileName)
         labels.append(thislabel)
-        trainarr[i,:] = datatoarray("C:/Users/Administrator/Desktop/data1/traindata/" + thisFileName)
+        trainarr[i,:] = datatoarray("C:/Users/Administrator/Desktop/data/traindata/" + thisFileName)
     return trainarr, labels
 #identify test data via KNN
 def datatest():
     trainarr, labels = traindata()
-    testlist = listdir("C:/Users/Administrator/Desktop/data1/testdata")
+    testlist = listdir("C:/Users/Administrator/Desktop/data/testdata")
     tnum = len(testlist)
     print(tnum)
     for i in range(0,tnum):
         thisTestFile = testlist[i]
-        testarr = datatoarray("C:/Users/Administrator/Desktop/data1/testdata/"+thisTestFile)
+        testarr = datatoarray("C:/Users/Administrator/Desktop/data/testdata/"+thisTestFile)
         #print(testarr)
         rknn = knn(3, testarr, trainarr, labels)
         print(rknn)
 
-datatest()
+#datatest()
+
+#test one set of test data
+trainarr, labels = traindata()
+thisTestFile = "C:/Users/Administrator/Desktop/data/testdata/8_76.txt"
+testarr = datatoarray(thisTestFile)
+rknn = knn(3, testarr, trainarr, labels)
+print(rknn)
