@@ -30,7 +30,7 @@ dtc.fit(x2, y2)
 
 #predict sales volume
 import numpy as npy
-x3 = npy.array([[1, -1, -1, 1]])
+x3 = npy.array([[1, -1, -1, 1], [1, 1, 1, 1], [-1, 1, -1, 1]])
 result = dtc.predict(x3)
 print(result)
 
