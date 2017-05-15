@@ -11,5 +11,20 @@ from sklearn.cluster import KMeans
 kms = KMeans(n_clusters = 4) #n_jobs means number of threads, max_inter indicates of number for iteration
 y = kms.fit_predict(x)
 print(y)
-#x indicates student serial No., y represent student class
+#x indicates student serial No., y represents student classification
 s = npy.arange(0, len(y))
+pyl.plot(s, y, "o")
+pyl.show()
+
+#clusterting for goods
+import pymysql
+conn = pymysql.connect(host = "127.0.0.1", user = "root", passwd = "root", db = "test")
+sql = "select price, comment from taob limit 30"
+dataf = pda. read_sql(sql, conn)
+x = dataf.iloc[:, :].as_matrix()
+kms = KMeans(n_clusters = 3) 
+y = kms.fit_predict(x)
+print(y)
+for i in range(0, len(y)):
+    if(y[i] = 0):
+        pyl.plot(dataf.iloc[i:i+1, 0:1],as_matrix())
