@@ -25,6 +25,13 @@ x = dataf.iloc[:, :].as_matrix()
 kms = KMeans(n_clusters = 3) 
 y = kms.fit_predict(x)
 print(y)
+
 for i in range(0, len(y)):
-    if(y[i] = 0):
-        pyl.plot(dataf.iloc[i:i+1, 0:1],as_matrix())
+    if(y[i] == 0):
+        pyl.plot(dataf.iloc[i:i+1, 0:1].as_matrix(), dataf.iloc[i:i+1, 1:2].as_matrix(), "*r")
+    if(y[i] == 1):
+        pyl.plot(dataf.iloc[i:i+1, 0:1].as_matrix(), dataf.iloc[i:i+1, 1:2].as_matrix(), "sy")
+    if(y[i] == 2):
+        pyl.plot(dataf.iloc[i:i+1, 0:1].as_matrix(), dataf.iloc[i:i+1, 1:2].as_matrix(), "pk")
+pyl.show()
+
