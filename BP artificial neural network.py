@@ -20,13 +20,13 @@ for i in range(0, len(x)):
         if(thisdata == "是" or thisdata == "多" or thisdata == "高"):
             x[i][j] = int(1)
         else:
-            x[i][j] = 0
+            x[i][j] = -1
 for i in range(0, len(y)):
     thisdata = y[i]
     if(thisdata == "高"):
         y[i] = 1
     else:
-        y[i] = 0
+        y[i] = -1
 # fallible point: train x and y directly here
 # right way: convert data type of x and y from object to datframe, then to array designated with type
 xf = pda.DataFrame(x)
@@ -46,6 +46,11 @@ model.add(Activation("sigmoid"))#sigmoid is specially for binary
 #compile
 model.compile(loss = "binary_crossentropy", optimizer = "adam", class_model = "binary")
 #training
-model.fit(x2, y2, nb_epoch =50, batch_size = 100)#nb_epoch: num of training
+model.fit(x2, y2, nb_epoch =20, batch_size = 100)#nb_epoch: num of training
 #predict classification
 rst = model.predict_classes(x).reshape(len(x))
+for i in range(0, len(x2)):
+    z = 0
+    if(rst[i] != y[i]):
+        z+=1
+print(1 - z/len(x2))
