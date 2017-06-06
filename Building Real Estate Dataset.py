@@ -3,7 +3,7 @@ import pandas as pd
 import pickle
 import matplotlib.pyplot as plt
 from matplotlib import style
-style.use("ggplot")
+style.use("fivethirtyeight")
 
 
 # api_key = open
@@ -19,6 +19,7 @@ main_df = pd.DataFrame()
 
 for code in codeNum:
     df = quandl.get("ZILL/N" +code+"_LPC")
+    
     if main_df.empty == True:
         #df.set_index("Date", inplace = True)
         main_df = df
@@ -27,11 +28,17 @@ for code in codeNum:
         #main_df = pd.merge(main_df, df, on = "Date", how = "outer")
         main_df = pd.concat([main_df, df])
 
-pickle_out = open("C:\\Users\\Administrator\\Desktop\\fiddy_states.pickle", "wb")
+main_df.plot()
+plt.show()
+
+main_df["Value"] = (main_df["Value"] - main_df["Value"][0])/main_df["Value"][0]*100
+
+
+pickle_out = open("C:\\Users\\Asymmetry\\Desktop\\fiddy_states1.pickle", "wb")
 pickle.dump(main_df, pickle_out)
 pickle_out.close()
 
-pickle_in = open("C:\\Users\\Administrator\\Desktop\\fiddy_states.pickle", "rb")
+pickle_in = open("C:\\Users\\Asymmetry\\Desktop\\fiddy_states1.pickle", "rb")
 HPI_data = pickle.load(pickle_in)
 print(HPI_data)
 
