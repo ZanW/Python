@@ -42,6 +42,8 @@ pickle_in = open("C:\\Users\\Asymmetry\\Desktop\\fiddy_states1.pickle", "rb")
 HPI_data = pickle.load(pickle_in)
 print(HPI_data)
 
-HPI_data.plot()
-plt.legend().remove()
-plt.show() 
+HPI_data.to_pickle("C:\\Users\\Asymmetry\\Desktop\\pickle.pickle")
+
+##HPI_data.plot()
+##plt.legend().remove()
+##plt.show() 
