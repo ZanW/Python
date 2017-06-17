@@ -26,6 +26,11 @@ class RandomWalk():
             # Calculate the next x and y values.
             next_x = self.x_values[-1] + x_step
             next_y = self.y_values[-1] + y_step
+
+
+#            next_x = x_step
+#            next_y = y_step
+            
             self.x_values.append(next_x)
             self.y_values.append(next_y)
 
