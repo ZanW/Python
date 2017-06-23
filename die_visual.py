@@ -1,9 +1,9 @@
 from die import Die
 import pygal
 
-'''Create 2 six_sided dies.'''
+'''Create 1 six_sided die and 1 ten-sided die.'''
 die_1 = Die()
-die_2 = Die()
+die_2 = Die(10)
 
 
 '''make rolls and store results in a list named results'''
@@ -27,10 +27,10 @@ print(frequencies)
 
 '''visualize the results.'''
 hist = pygal.Bar()
-hist.title = "Results of rolling two D6 dice 1000 times"
+hist.title = "Results of rolling D6 and D10 dice 1000 times"
 hist.x_labels = list(range(min_result, max_result+1))
 hist.x_title = "Result"
 hist.y_title = "Frequency of Result"
 
-hist.add("D6+D6", frequencies)
+hist.add("D6+D10", frequencies)
 hist.render_to_file("C:\\Users\\Asymmetry\\Desktop\\die_visual.svg")
