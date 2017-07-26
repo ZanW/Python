@@ -44,6 +44,9 @@ class main():
         # alter features of "emp_length"
         proc_filter_data["emp_length_feat"] = filter_data["emp_length"].apply(cls.proc_emp_length)
 
+        filter_data.to_csv("C:\\Users\\Asymmetry\\Desktop\\dataset\\output\\proc_loan.csv", index = False)
+
+
     @staticmethod
     def create_label(status_val):
         label = 1
@@ -72,5 +75,25 @@ class main():
         else: label = emp_length_val.split()[0]
 
         return label
+
+    @staticmethod
+    def analyze_lending_club_data(lc_data):
+        # select specific column
+        used_cols = ['loan_amnt', 'term', 'int_rate', 'grade', 'issue_d', 'addr_state', 'loan_status']
+        used_data = lc_data[used_cols]
+        # check dataset information
+        print("\nanalyze dataset preview:")
+        print(used_data.head())
+
+        # 1.check different dataset status
+        print("\ndata size of each loan status:")
+        print(used_data["loan_status"].value_counts())
+
+        # 2. total amount of loan by month
+        # data type conversion
+        print("convert data type...")
+        used_data["issue_d2"] = pd.to_datetime(used_data["issue_d"])
+
+
 
 main.run_main()
