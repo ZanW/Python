@@ -93,7 +93,33 @@ class main():
         # data type conversion
         print("convert data type...")
         used_data["issue_d2"] = pd.to_datetime(used_data["issue_d"])
+        print("\nanalyze dataset preview:")
+        print(used_data.head())
+        print("\nanalyze basic information of data set:")
+        print(used_data.info())
 
+        data_group_by_date = used_data.groupby(["issue_d2"]).sum()
+        data_group_by_date.reset_index(inplace = True)
+        data_group_by_date["issue_month"] = data_group_by_date["issue_d2"].apply(lambda x: x.to_period("M"))
 
+        load_amount_group_by_month = data_group_by_date.groupby("issue_month")["load_amnt"].sum()
+
+        # convert to dataframe
+        load_amount_group_by_month_df = pd.DataFrame(load_amount_group_by_month).reset_index()
+        print("\ntotal loan amount preview by month:")
+        print(load_amount_group_by_month_df.head())
+
+        # save the results
+        load_amount_group_by_month_df.to_csv("C:\\Users\\Asymmetry\\Desktop\\dataset\\output\\load_amount_by_month.csv", index = False)
+
+        # 3. total amount of loan by state
+        data_group_by_state = used_data.groupby(["addr_state"])["loan_amnt"].sum()
+
+        # convert to dataframe
+        data_group_by_state_df = pd.DataFrame(data_group_by_state).reset_index()
+        print("\ntotal loan amount preview by state:")
+        print(data_group_by_state_df.head())
+        # save the results
+        load_amount_group_by_month_df.to_csv("C:\\Users\\Asymmetry\\Desktop\\dataset\\output\\load_amount_by_state.csv", index = False)
 
 main.run_main()
